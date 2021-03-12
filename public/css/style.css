@@ -1,0 +1,69 @@
+/******* Hero section **********/
+.hero-section{
+    width: 100%;
+    height: 80vh;
+    background: rgb(68, 137, 226)
+}
+
+.hero-section
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: whitesmoke;
+    text-align: center;
+}
+
+.hero-section
+.content
+a {
+    color: whitesmoke;
+    font-weight: 700;
+    border-color: whitesmoke;
+}
+
+/*********** Posts section ***********/
+.posts-section
+.heading
+.underline {
+    width: 30px;
+    height: 2px;
+    background: rgb(68, 137, 226);
+}
+
+.posts-create
+.created
+div {
+    visibility: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/******** Footer Section ********/
+footer {
+    background: black;
+    color: whitesmoke;
+    max-height: 100px;
+    min-height: 100px;
+    line-height: 100px;
+}
+
+footer span {
+    color: tomato;
+    font-size: 30px;
+    transition: all .5s;
+}
+
+footer:hover span {
+    font-size: 40px;
+}
