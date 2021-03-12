@@ -5,7 +5,7 @@
         <div class="content">
             <h1>Welcome to my Blog.</h1>
             <h3>Wanna write some posts ?</h3>
-            <a class="btn btn-lg btn-outline-secondary mx-auto" href="{{ route("posts.index") }}">Get started!</a>
+            <a class="btn btn-lg btn-outline-secondary mx-auto" href="{{ route("posts.create") }}">Get started!</a>
         </div>
     </section>
 
@@ -16,46 +16,26 @@
                 <div class="underline mx-auto"></div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6 my-3 xs-12">
-                    <div class="card">
-                    <img class="card-img-top" src="{{ asset("images/facebook-logo-icon-smartphone-3d-rendering_1379-5352.jpg") }}" alt="Card image cap">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis at corporis modi recusandae ...</p>
-                          <a href="#" class="btn btn-primary">Read More</a>
+
+                @foreach ($posts as $post)
+                    <div class="col-lg-4 col-md-6 my-3 xs-12">
+                        <div class="card">
+                        <img class="card-img-top" src="{{ asset('images/'.$post->image_path)}}" alt="Card image cap">
+                            <div class="card-body">
+                            <h5 class="card-title">{{ $post->title }}</h5>
+                            <p class="card-text">
+                                @if (strlen($post->description) >= 175 )
+                                    {{ substr($post->description, 0, 170)."....." }}
+
+                                @else 
+                                    {{ $post->description }}
+                                @endif
+                            </p>
+                            <a href="{{ route("posts.show", $post->slug) }}" class="btn btn-primary">Read More</a>
+                            </div>
                         </div>
-                      </div>
-                </div>
-                <div class="col-lg-4 col-md-6 my-3 xs-12">
-                    <div class="card">
-                        <img class="card-img-top" src="{{ asset("images/facebook-logo-icon-smartphone-3d-rendering_1379-5352.jpg") }}" alt="Card image cap">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis at corporis modi recusandae ...</p>
-                          <a href="#" class="btn btn-primary">Read More</a>
-                        </div>
-                      </div>
-                </div>
-                <div class="col-lg-4 col-md-6 my-3 xs-12">
-                    <div class="card">
-                        <img class="card-img-top" src="{{ asset("images/facebook-logo-icon-smartphone-3d-rendering_1379-5352.jpg") }}" alt="Card image cap">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis at corporis modi recusandae ...</p>
-                          <a href="#" class="btn btn-primary">Read More</a>
-                        </div>
-                      </div>
-                </div>
-                <div class="col-lg-4 col-md-6 my-3 xs-12">
-                    <div class="card">
-                        <img class="card-img-top" src="{{ asset("images/facebook-logo-icon-smartphone-3d-rendering_1379-5352.jpg") }}" alt="Card image cap">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis at corporis modi recusandae ...</p>
-                          <a href="#" class="btn btn-primary">Read More</a>
-                        </div>
-                      </div>
-                </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>

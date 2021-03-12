@@ -9,7 +9,9 @@ use App\Models as M;
 class PostController extends Controller {
 
     public function __construct() {
-        $this->middleware("auth");
+        $this->middleware("auth", [
+            "except" => ["show"]
+        ]);
     }
     /**
      * Display a listing of the resource.
@@ -40,24 +42,20 @@ class PostController extends Controller {
      */
     public function store(Request $request)
     {
-        // dd($request);
         $request->validate([
             "title" => "required",
             "description" => "required",
             "img" => "required | mimes:jpg,png,jpeg | max: 5000"
-        ]);
-        
-
+            ]);
         $post = new M\Post();
         $post->title = $request->title;
         $post->slug = str_replace(" ", "-", strtolower($request->title));
-        $post->image_path = uniqid()."-".str_replace(" ", "-", strtolower($request->title)).".".$request->img->extension();
+        $img_name = uniqid().".".$request->img->extension();
+        $post->image_path = $img_name;
         $post->description = $request->description;
-        dd($post->user()->user);
-        $request->img->move(public_path("images"), uniqid()."-".str_replace(" ", "-", strtolower($request->title)).".".$request->img->extension());
+        $post->user_id = auth()->user()->id;
+        $request->img->move(public_path("images"), $img_name);
         $post->save();
-
-
         return redirect()->route("posts.create");
     }
 
@@ -67,9 +65,11 @@ class PostController extends Controller {
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
-    {
-        //
+    public function show($slug) {
+        // dd(M\Post::where("slug", $slug)->get());
+        return view("posts.show", [
+            "post" => M\Post::where("slug", $slug)->firstorFail()
+        ]);
     }
 
     /**
@@ -78,9 +78,11 @@ class PostController extends Controller {
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($slug)
     {
-        //
+        return view("posts.edit", [
+            "post" => M\Post::where("slug", $slug)->firstorFail()
+        ]);
     }
 
     /**
@@ -90,9 +92,19 @@ class PostController extends Controller {
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $slug)
     {
-        //
+        $post_to_update = M\Post::where("slug", $slug)->firstorFail();
+        $post_to_update->title = $request->title;
+        $post_to_update->slug = str_replace(" ", "-", strtolower($request->title));
+        $post_to_update->description = $request->description;
+        if($request->img) {
+            $updated_img_name = uniqid().".".$request->img->extension();
+            $post_to_update->image_path = $updated_img_name;
+            $request->img->move(public_path("images"), $updated_img_name);
+        }
+        $post_to_update->save();
+        return redirect()->route("home");
     }
 
     /**
@@ -101,8 +113,10 @@ class PostController extends Controller {
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($slug)
     {
-        //
+        $post_to_delete = M\Post::where("slug", $slug)->firstorFail();
+        $post_to_delete->delete();
+        return redirect()->route("home");
     }
 }

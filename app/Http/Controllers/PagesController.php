@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PagesController extends Controller {
 
@@ -20,12 +21,16 @@ class PagesController extends Controller {
      */
     public function index()
     {
-        return view("welcome");
+        return view("welcome", [
+            "posts" => Post::all()
+        ]);
     }
 
     public function home()
     {
-        return view('home');
+        return view('home', [
+            "posts" => Post::all()
+        ]);
     }
 
     /**

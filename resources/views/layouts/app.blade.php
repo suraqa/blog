@@ -26,9 +26,16 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
-            </a>
+            @if (Auth::check())
+                <a class="navbar-brand" href="{{ url('/home') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+            @else
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+            @endif
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="{{ __('Toggle navigation') }}">
@@ -36,7 +43,6 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Authentication Links -->
                     @guest
@@ -53,10 +59,12 @@
                         @endif
                     @else
                         <li class="nav-item">
-                            <a href="{{ route("home") }}" class="nav-link {{ Request::path() === "/home" ? 'active' : '' }}">Home</a>
+                            <a href="{{ route('home') }}"
+                                class="nav-link {{ Request::path() === '/home' ? 'active' : '' }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route("posts.index") }}" class="nav-link {{ Request::path() === "/posts" ? 'active' : '' }}">Posts</a>
+                            <a href="{{ route('posts.create') }}"
+                                class="nav-link {{ Request::path() === '/posts' ? 'active' : '' }}">Posts</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -66,7 +74,7 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">
+                                                                 document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 
@@ -83,10 +91,16 @@
 
     @yield('content')
 
-    <footer>
+    <footer class="mt-5">
         <div class="container">
             <div class="content text-center">
-                Made with <span>♥</span> by <em>Suraqa Jafrani</em>
+                <div>
+                    Made with <span>♥</span> by <em>Suraqa Jafrani</em>
+                </div>
+                <div>
+                    <a href='https://www.freepik.com/vectors/promotion'>Promotion vector created by vectorjuice -
+                        www.freepik.com</a>
+                </div>
             </div>
         </div>
     </footer>

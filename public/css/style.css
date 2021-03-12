@@ -38,8 +38,24 @@ div {
     visibility: hidden;
 }
 
+.posts-section
+.card
+img {
+    min-height: 200px;
+    max-height: 200px;
+}
 
+.posts-section
+.card {
+    min-height: 450px;
+    max-height: 450px;
+}
 
+/* .posts-section
+.card-body
+a {
+    float: ;
+} */
 
 
 
@@ -53,8 +69,8 @@ div {
 footer {
     background: black;
     color: whitesmoke;
-    max-height: 100px;
-    min-height: 100px;
+    max-height: 200px;
+    min-height: 200px;
     line-height: 100px;
 }
 
