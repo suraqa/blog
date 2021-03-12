@@ -64,6 +64,6 @@ footer span {
     transition: all .5s;
 }
 
-footer:hover span {
+footer .content:hover span {
     font-size: 40px;
 }

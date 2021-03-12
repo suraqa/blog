@@ -85,7 +85,7 @@
 
     <footer>
         <div class="container">
-            <div class="text-center">
+            <div class="content text-center">
                 Made with <span>♥</span> by <em>Suraqa Jafrani</em>
             </div>
         </div>

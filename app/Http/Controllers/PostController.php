@@ -41,17 +41,20 @@ class PostController extends Controller {
     public function store(Request $request)
     {
         // dd($request);
-        // $request->validate([
-        //     "title" => "required",
-        //     "description" => "required",
-        //     "img" => "required | mimes:jpg,png,jpeg | max: 5000"
-        // ]);
+        $request->validate([
+            "title" => "required",
+            "description" => "required",
+            "img" => "required | mimes:jpg,png,jpeg | max: 5000"
+        ]);
         
 
         $post = new M\Post();
         $post->title = $request->title;
         $post->slug = str_replace(" ", "-", strtolower($request->title));
+        $post->image_path = uniqid()."-".str_replace(" ", "-", strtolower($request->title)).".".$request->img->extension();
         $post->description = $request->description;
+        dd($post->user()->user);
+        $request->img->move(public_path("images"), uniqid()."-".str_replace(" ", "-", strtolower($request->title)).".".$request->img->extension());
         $post->save();
 
 

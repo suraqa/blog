@@ -18,7 +18,8 @@ class CreatePostsTable extends Migration
             $table->foreignId("user_id")->constrained("users");
             $table->string("slug");
             $table->string("title");
-            $table->text("description");
+            $table->string("image_path");
+            $table->longText("description");
             $table->timestamps();
         });
     }

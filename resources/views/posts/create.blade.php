@@ -13,6 +13,16 @@
                 <div class="col-6">
                     <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data" onsubmit="created()">
                         @csrf
+
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                                <div class="alert alert-danger" role="alert">
+                                    {{ $error }}
+                                </div>
+                            @endforeach
+                            {{-- <div class="alert alert-success" role="alert">Your post has been created!</div> --}}
+                        @endif
+
                         <div class="form-group">
                             <label for="title">Title</label>
                             <input type="text" id="title" name="title" class="form-control" placeholder="Enter Title">
